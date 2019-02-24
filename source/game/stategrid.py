@@ -6,12 +6,7 @@ class StateGrid:
         self.cells = self.zero_state()
 
     def zero_state(self):
-        zero_state = []
-        for i in range(self.rows):
-            new_row = []
-            for j in range(self.columns):
-                new_row.append(0)
-            zero_state.append(new_row)
+        zero_state = [[0 for col in range(self.columns)] for row in range(self.rows)]
         return zero_state
 
     def update(self):
