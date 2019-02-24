@@ -43,8 +43,18 @@ class StateGrid:
             for c in (col-1, col, col+1):
                 if r == row and c == col:  # Don't check the passed cell itself...
                     pass
-                elif r < 0 or c < 0 or r >= self.rows or c >= self.columns:  # Don't check out of bounds...
-                    pass
-                elif self.cells[r][c] == 1:
-                    living_neighbours += 1
+                else:
+                    # Wrap around the opposite edge...
+                    if r < 0:
+                        r = self.rows-1
+                    if c < 0:
+                        c = self.columns-1
+                    if r >= self.rows:
+                        r = 0
+                    if c >= self.columns:
+                        c = 0
+
+                    if self.cells[r][c] == 1:
+                        living_neighbours += 1
+
         return living_neighbours
