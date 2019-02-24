@@ -19,11 +19,8 @@ class GameOfLife(pyglet.window.Window):
 
     def update(self, dt):
         if self.running:
-            self.update_state()
+            self.stategrid = self.stategrid.update()
             self.update_sprites()
-
-    def update_state(self):
-        self.stategrid = self.generate_new_state(self.stategrid)
 
     def update_sprites(self):
         for i in range(self.stategrid.rows):
@@ -32,25 +29,6 @@ class GameOfLife(pyglet.window.Window):
                     self.spritegrid.sprites[i][j].color = (255, 200, 150)
                 elif self.stategrid.cells[i][j] == 0:
                     self.spritegrid.sprites[i][j].color = (255, 255, 255)
-
-    def generate_new_state(self, old_grid: StateGrid):
-        new_grid = StateGrid(old_grid.rows, old_grid.columns)
-
-        for i in range(new_grid.rows):
-            for j in range(new_grid.columns):
-                alive_neighbours = old_grid.alive_neighbours(i, j)
-                # Old cell is alive
-                if old_grid.is_cell_alive(i, j):
-                    if alive_neighbours < 2 or alive_neighbours > 3:
-                        new_grid.cells[i][j] = 0  # Old cell now dies
-                    else:
-                        new_grid.cells[i][j] = 1  # Old cell survives
-                # Old cell was dead
-                else:
-                    if alive_neighbours == 3:
-                        new_grid.cells[i][j] = 1  # New cell is born from breeding
-
-        return new_grid
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.spritegrid.position_in_canvas(x, y):
