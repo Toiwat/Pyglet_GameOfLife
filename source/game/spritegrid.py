@@ -42,3 +42,11 @@ class SpriteGrid:
                                          batch=self.cells_batch)
                 )
             self.sprites.append(new_sprites_row)
+
+    def update(self, stategrid: StateGrid):
+        for i in range(self.rows):
+            for j in range(self.columns):
+                if stategrid.cells[i][j] == 1:
+                    self.sprites[i][j].color = (255, 200, 150)
+                elif stategrid.cells[i][j] == 0:
+                    self.sprites[i][j].color = (255, 255, 255)

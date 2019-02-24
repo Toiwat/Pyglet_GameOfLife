@@ -8,7 +8,7 @@ class GameOfLife(pyglet.window.Window):
     def __init__(self, window_width, window_height, grid_rows, grid_columns):
         super(GameOfLife, self).__init__(width=window_width, height=window_height,
                                          resizable=False,
-                                         caption="Game of Life")
+                                         caption="Game of Life - Running: False")
         self.win_w = window_width
         self.win_h = window_height
 
@@ -20,15 +20,7 @@ class GameOfLife(pyglet.window.Window):
     def update(self, dt):
         if self.running:
             self.stategrid = self.stategrid.update()
-            self.update_sprites()
-
-    def update_sprites(self):
-        for i in range(self.stategrid.rows):
-            for j in range(self.stategrid.columns):
-                if self.stategrid.cells[i][j] == 1:
-                    self.spritegrid.sprites[i][j].color = (255, 200, 150)
-                elif self.stategrid.cells[i][j] == 0:
-                    self.spritegrid.sprites[i][j].color = (255, 255, 255)
+            self.spritegrid.update(self.stategrid)
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.spritegrid.position_in_canvas(x, y):
@@ -40,7 +32,7 @@ class GameOfLife(pyglet.window.Window):
             elif button == pyglet.window.mouse.RIGHT:
                 self.stategrid.cells[cell_row][cell_col] = 0
 
-            self.update_sprites()
+            self.spritegrid.update(self.stategrid)
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.SPACE:
@@ -49,7 +41,6 @@ class GameOfLife(pyglet.window.Window):
 
     def on_draw(self):
         self.clear()
-
         self.spritegrid.cells_batch.draw()
 
 
