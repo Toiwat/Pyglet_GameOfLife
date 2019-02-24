@@ -28,9 +28,9 @@ class GameOfLife(pyglet.window.Window):
             cell_col = floor(fabs(self.spritegrid.topleft_x - x) // 16)
 
             if button == pyglet.window.mouse.LEFT:
-                self.stategrid.cells[cell_row][cell_col] = 1
+                self.stategrid.set_alive(cell_row, cell_col)
             elif button == pyglet.window.mouse.RIGHT:
-                self.stategrid.cells[cell_row][cell_col] = 0
+                self.stategrid.set_dead(cell_row, cell_col)
 
             self.spritegrid.update(self.stategrid)
 
