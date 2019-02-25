@@ -1,5 +1,6 @@
 import pyglet
-from game.stategrid import StateGrid
+# from game.stategrid import StateGrid
+from game.stategrid_np import StateGridNP as StateGrid
 from game.spritegrid import SpriteGrid
 from math import floor, fabs
 
@@ -19,7 +20,7 @@ class GameOfLife(pyglet.window.Window):
 
     def update(self, dt):
         if self.running:
-            self.stategrid = self.stategrid.update()
+            self.stategrid.update()
             self.spritegrid.update(self.stategrid)
 
     def on_mouse_press(self, x, y, button, modifiers):

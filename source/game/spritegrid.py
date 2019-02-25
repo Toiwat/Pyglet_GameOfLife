@@ -1,5 +1,6 @@
 import pyglet
-from game.stategrid import StateGrid
+# from game.stategrid import StateGrid
+from game.stategrid_np import StateGridNP as StateGrid
 from game import resources
 
 class SpriteGrid:
@@ -43,7 +44,7 @@ class SpriteGrid:
                 )
             self.sprites.append(new_sprites_row)
 
-    def update(self, stategrid: StateGrid):
+    def update(self, stategrid):
         for i in range(self.rows):
             for j in range(self.columns):
                 if stategrid.cells[i][j] == 1:
