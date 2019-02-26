@@ -34,15 +34,8 @@ class SpriteGrid:
         return (x > self.topleft_x and y < self.topleft_y) and (x < self.bottomright_x and y > self.bottomright_y)
 
     def setup_sprites(self):
-        for i in range(self.rows):
-            new_sprites_row = []
-            for j in range(self.columns):
-                new_sprites_row.append(
-                    pyglet.sprite.Sprite(img=resources.x16_with_border,
-                                         x=self.topleft_x+(j*16), y=self.topleft_y-(i*16),
-                                         batch=self.cells_batch)
-                )
-            self.sprites.append(new_sprites_row)
+        self.sprites = [[pyglet.sprite.Sprite(img=resources.x16_with_border, x=self.topleft_x+(j*16), y=self.topleft_y-(i*16), batch=self.cells_batch) for j in range(self.columns)]
+                        for i in range(self.rows)]
 
     def update(self, stategrid):
         for i in range(self.rows):
