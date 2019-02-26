@@ -7,7 +7,7 @@ from math import floor, fabs
 
 
 class GameOfLife(pyglet.window.Window):
-    def __init__(self, window_width, window_height, grid_rows, grid_columns, tile_size):
+    def __init__(self, window_width=800, window_height=600, grid_rows=15, grid_columns=20, tile_size=32):
         super(GameOfLife, self).__init__(width=window_width, height=window_height,
                                          resizable=False,
                                          caption="Game of Life - Running: False")
