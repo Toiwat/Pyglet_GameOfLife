@@ -1,8 +1,8 @@
 import pyglet
 # from game.stategrid import StateGrid
 from game.stategrid_np import StateGridNP as StateGrid
-from game.spritegrid import SpriteGrid
-from game.gl_renderer import SpriteGrid_GL
+# from game.spritegrid import SpriteGrid
+from game.gl_renderer import oglGrid
 from math import floor, fabs
 
 
@@ -15,8 +15,8 @@ class GameOfLife(pyglet.window.Window):
         self.win_h = window_height
 
         self.stategrid = StateGrid(grid_rows, grid_columns)
-        #self.grid = SpriteGrid(self.stategrid, self.win_w, self.win_h)
-        self.grid = SpriteGrid_GL(self.stategrid, self.win_w, self.win_h)
+        # self.grid = SpriteGrid(self.stategrid, self.win_w, self.win_h)
+        self.grid = oglGrid(self.stategrid, self.win_w, self.win_h)
 
         self.running = False
 
