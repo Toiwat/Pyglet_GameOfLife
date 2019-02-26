@@ -2,7 +2,7 @@ import pyglet
 from game.stategrid_np import StateGridNP as StateGrid
 
 
-class SpriteGrid_GL:
+class oglGrid:
     def __init__(self, stategrid: StateGrid, win_w, win_h):
         self.rows = stategrid.rows
         self.columns = stategrid.columns

@@ -2,6 +2,7 @@ import pyglet
 # from game.stategrid import StateGrid
 from game.stategrid_np import StateGridNP as StateGrid
 from game.spritegrid import SpriteGrid
+from game.gl_renderer import SpriteGrid_GL
 from math import floor, fabs
 
 
@@ -14,26 +15,27 @@ class GameOfLife(pyglet.window.Window):
         self.win_h = window_height
 
         self.stategrid = StateGrid(grid_rows, grid_columns)
-        self.spritegrid = SpriteGrid(self.stategrid, self.win_w, self.win_h)
+        #self.grid = SpriteGrid(self.stategrid, self.win_w, self.win_h)
+        self.grid = SpriteGrid_GL(self.stategrid, self.win_w, self.win_h)
 
         self.running = False
 
     def update(self, dt):
         if self.running:
             self.stategrid.update()
-            self.spritegrid.update(self.stategrid)
+            self.grid.update(self.stategrid)
 
     def on_mouse_press(self, x, y, button, modifiers):
-        if self.spritegrid.position_in_canvas(x, y):
-            cell_row = floor(fabs(self.spritegrid.topleft_y - y) // 16)
-            cell_col = floor(fabs(self.spritegrid.topleft_x - x) // 16)
+        if self.grid.position_in_canvas(x, y):
+            cell_row = floor(fabs(self.grid.topleft_y - y) // self.grid.tile_size)
+            cell_col = floor(fabs(self.grid.topleft_x - x) // self.grid.tile_size)
 
             if button == pyglet.window.mouse.LEFT:
                 self.stategrid.set_alive(cell_row, cell_col)
             elif button == pyglet.window.mouse.RIGHT:
                 self.stategrid.set_dead(cell_row, cell_col)
 
-            self.spritegrid.update(self.stategrid)
+            self.grid.update(self.stategrid)
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.SPACE:
@@ -42,4 +44,4 @@ class GameOfLife(pyglet.window.Window):
 
     def on_draw(self):
         self.clear()
-        self.spritegrid.cells_batch.draw()
+        self.grid.batch.draw()
