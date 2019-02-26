@@ -3,11 +3,11 @@ from game.stategrid_np import StateGridNP as StateGrid
 
 
 class oglGrid:
-    def __init__(self, stategrid: StateGrid, win_w, win_h):
+    def __init__(self, stategrid: StateGrid, win_w, win_h, tile_size=16):
         self.rows = stategrid.rows
         self.columns = stategrid.columns
 
-        self.tile_size = 32
+        self.tile_size = tile_size
 
         self.win_w = win_w
         self.win_h = win_h
