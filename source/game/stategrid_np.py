@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.signal import convolve2d
 
+
 class StateGridNP:
     def __init__(self, rows, columns):
         self.rows = rows
