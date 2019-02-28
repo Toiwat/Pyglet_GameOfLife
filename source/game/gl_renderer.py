@@ -58,11 +58,12 @@ class oglGrid:
         )
 
     def update(self, stategrid):
-        for i in range(self.rows):
-            for j in range(self.columns):
-                vert_index = (self.columns * 4 * i) + j * 4
-                color_index = vert_index * 3
-                if stategrid.cells[i][j] == 1:
-                    self.vertex_list.colors[color_index:color_index+12] = [50, 50, 50]*4
-                else:
-                    self.vertex_list.colors[color_index:color_index + 12] = [255, 255, 255] * 4
+        for cell in stategrid.updated:
+            i = cell[0]
+            j = cell[1]
+            vert_index = (self.columns * 4 * i) + j * 4
+            color_index = vert_index * 3
+            if stategrid.cells[i][j] == 1:
+                self.vertex_list.colors[color_index:color_index+12] = [50, 50, 50]*4
+            else:
+                self.vertex_list.colors[color_index:color_index + 12] = [255, 255, 255] * 4

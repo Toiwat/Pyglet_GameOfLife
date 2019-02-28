@@ -7,6 +7,7 @@ class StateGridNP:
         self.rows = rows
         self.columns = columns
         self.cells = np.zeros((rows, columns))
+        self.updated = []
 
         # Setup convolution kernel...
         self.rules = np.ones((3, 3))
@@ -23,10 +24,13 @@ class StateGridNP:
         # logical_and and logical_or are required because Numpy no longer does direct element-wise logical operations
         # for ndarrays
         # astype(int) transforms the resulting boolean matrix into ints for the next state
-        self.cells = np.logical_or((count == 3), np.logical_and((self.cells == 1), (count == 2))).astype(int)
+        new_state = np.logical_or((count == 3), np.logical_and((self.cells == 1), (count == 2)))
 
-    def set_alive(self, row, col):
-        self.cells[row][col] = 1
+        self.updated = [(row, cell) for cell in range(self.columns) for row in range(self.rows)
+                        if np.logical_xor(new_state, self.cells.astype(bool))[row, cell]]
 
-    def set_dead(self, row, col):
-        self.cells[row][col] = 0
+        self.cells = new_state.astype(int)
+
+    def set_state(self, row: int, col: int, alive: bool):
+        self.cells[row][col] = int(alive)
+        self.updated.append((row, col))

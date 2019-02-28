@@ -30,11 +30,8 @@ class StateGrid:
     def is_cell_alive(self, row, col):
         return (self.cells[row][col] == 1)
 
-    def set_alive(self, row, col):
-        self.cells[row][col] = 1
-
-    def set_dead(self, row, col):
-        self.cells[row][col] = 0
+    def set_state(self, row: int, col: int, alive: bool):
+        self.cells[row][col] = int(alive)
 
     def alive_neighbours(self, row, col):
         living_neighbours = 0
