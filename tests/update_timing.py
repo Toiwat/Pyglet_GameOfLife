@@ -11,16 +11,16 @@ if __name__ == "__main__":
     print("Timing first set...")
     sprite_time.append(timeit.timeit(stmt="sprites.update(state)",
                                 setup='from game.grid.array_grid import ArrayGrid; \
-                                from game.ui.spritegrid import SpriteGrid; \
+                                from game.ui.spritegrid import PygletSpritesViewer; \
                                 state = ArrayGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
-                                sprites = SpriteGrid(state, 1280, 720)', number=cycles))
+                                sprites = PygletSpritesViewer(state, 1280, 720)', number=cycles))
 
     print("Timing second set...")
     sprite_np_time.append(timeit.timeit(stmt="sprites.update(state)",
                                      setup='from game.grid.array_grid import NumpyGrid; \
-                                    from game.ui.spritegrid import SpriteGrid; \
+                                    from game.ui.spritegrid import PygletSpritesViewer; \
                                     state = NumpyGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
-                                    sprites = SpriteGrid(state, 1280, 720)', number=cycles))
+                                    sprites = PygletSpritesViewer(state, 1280, 720)', number=cycles))
 
     print("Timing third set...")
     ogl_time.append(timeit.timeit(stmt="grid.update(state)",

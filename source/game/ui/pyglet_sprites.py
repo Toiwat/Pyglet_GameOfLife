@@ -4,7 +4,7 @@ from game.grid.numpy_grid import NumpyGrid as StateGrid
 from game import resources
 
 
-class SpriteGrid:
+class PygletSpritesViewer:
     def __init__(self, stategrid: StateGrid, win_w, win_h):
         self.rows = stategrid.rows
         self.columns = stategrid.columns
