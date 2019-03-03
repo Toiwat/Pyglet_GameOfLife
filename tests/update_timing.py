@@ -17,16 +17,16 @@ if __name__ == "__main__":
 
     print("Timing second set...")
     sprite_np_time.append(timeit.timeit(stmt="sprites.update(state)",
-                                     setup='from game.grid.array_grid import StateGridNP; \
+                                     setup='from game.grid.array_grid import NumpyGrid; \
                                     from game.ui.spritegrid import SpriteGrid; \
-                                    state = StateGridNP(' + str(grid_size) + ', ' + str(grid_size) + '); \
+                                    state = NumpyGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
                                     sprites = SpriteGrid(state, 1280, 720)', number=cycles))
 
     print("Timing third set...")
     ogl_time.append(timeit.timeit(stmt="grid.update(state)",
-                                   setup='from game.grid.array_grid import StateGridNP; \
+                                   setup='from game.grid.array_grid import NumpyGrid; \
                                     from game.ui.gl_renderer import oglGrid; \
-                                    state = StateGridNP(' + str(grid_size) + ', ' + str(grid_size) + '); \
+                                    state = NumpyGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
                                     grid = oglGrid(state, 1280, 720, 16)', number=cycles))
 
     print("\n Tests finished!")

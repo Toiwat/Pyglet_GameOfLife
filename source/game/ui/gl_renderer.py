@@ -1,5 +1,5 @@
 import pyglet
-from game.grid.stategrid_np import StateGridNP as StateGrid
+from game.grid.numpy_grid import NumpyGrid as StateGrid
 
 
 class oglGrid:

@@ -1,6 +1,6 @@
 import pyglet
 from game.grid.array_grid import ArrayGrid
-from game.grid.stategrid_np import StateGridNP
+from game.grid.numpy_grid import NumpyGrid
 import timeit
 
 if __name__ == "__main__":
@@ -8,7 +8,7 @@ if __name__ == "__main__":
     n = 100
 
     state = ArrayGrid(n, n)
-    npstate = StateGridNP(n, n)
+    npstate = NumpyGrid(n, n)
     state_time = timeit.timeit(state.update, number=1000)
     npstate_time = timeit.timeit(npstate.update, number=1000)
     sprite_time = timeit.timeit(stmt="sprites.update(state)",
