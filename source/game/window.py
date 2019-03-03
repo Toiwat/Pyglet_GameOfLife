@@ -1,5 +1,6 @@
 import pyglet
-from game.grid.numpy_grid import NumpyGrid as StateGrid
+# from game.grid.numpy_grid import NumpyGrid as StateGrid
+from game.grid.array_grid import ArrayGrid as StateGrid
 from game.ui.pyglet_opengl import PygletOpenglViewer
 from math import floor, fabs
 
