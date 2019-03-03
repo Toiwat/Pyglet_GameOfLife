@@ -5,10 +5,18 @@ from math import floor, fabs
 
 
 class GameOfLife(pyglet.window.Window):
-    def __init__(self, window_width=800, window_height=600, grid_rows=15, grid_columns=20, tile_size=32):
+    def __init__(self, window_width=800, window_height=600, tile_size=32, grid_size=(0, 0)):
         super(GameOfLife, self).__init__(width=window_width, height=window_height,
                                          resizable=False,
                                          caption="Game of Life - Running: False")
+
+        if grid_size == (0, 0):
+            grid_columns = (window_width-40) // tile_size
+            grid_rows = (window_height-100) // tile_size
+        else:
+            grid_columns = grid_size[1]
+            grid_rows = grid_size[0]
+
         self.width = window_width
         self.height = window_height
 
