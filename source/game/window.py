@@ -23,17 +23,23 @@ class GameOfLife(pyglet.window.Window):
             self.state_grid.update()
             self.viewer.update()
 
-    def on_mouse_press(self, x, y, button, modifiers):
+    def edit_cells(self, x, y, mouse_button):
         if self.viewer.is_position_inside_view_limits(x, y):
             cell_row = floor(fabs(self.viewer.top_left.y - y) // self.viewer.tile_size)
             cell_col = floor(fabs(self.viewer.top_left.x - x) // self.viewer.tile_size)
 
-            if button == pyglet.window.mouse.LEFT:
+            if mouse_button == pyglet.window.mouse.LEFT:
                 self.state_grid.set_cell_state(cell_row, cell_col, alive=True)
-            elif button == pyglet.window.mouse.RIGHT:
+            elif mouse_button == pyglet.window.mouse.RIGHT:
                 self.state_grid.set_cell_state(cell_row, cell_col, alive=False)
 
             self.viewer.update()
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.edit_cells(x, y, button)
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        self.edit_cells(x, y, buttons)
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.SPACE:
