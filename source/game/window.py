@@ -2,6 +2,7 @@ import pyglet
 # from game.grid.numpy_grid import NumpyGrid as StateGrid
 from game.grid.array_grid import ArrayGrid as StateGrid
 from game.ui.pyglet_opengl import PygletOpenglViewer
+from game.ui.pyglet_sprites import PygletSpritesViewer
 from math import floor, fabs
 
 
@@ -10,30 +11,31 @@ class GameOfLife(pyglet.window.Window):
         super(GameOfLife, self).__init__(width=window_width, height=window_height,
                                          resizable=False,
                                          caption="Game of Life - Running: False")
-        self.win_w = window_width
-        self.win_h = window_height
+        self.width = window_width
+        self.height = window_height
 
         self.stategrid = StateGrid(grid_rows, grid_columns)
-        self.grid = PygletOpenglViewer(self.stategrid, self.win_w, self.win_h, tile_size)
+        # self.grid = PygletOpenglViewer(self.stategrid, self, tile_size=16, color_dead=(255, 255, 255), color_alive=(100, 100, 100))
+        self.grid = PygletSpritesViewer(self.stategrid, self, color_dead=(255, 255, 255), color_alive=(100, 100, 100))
 
         self.running = False
 
     def update(self, dt):
         if self.running:
             self.stategrid.update()
-            self.grid.update(self.stategrid)
+            self.grid.update()
 
     def on_mouse_press(self, x, y, button, modifiers):
-        if self.grid.position_in_canvas(x, y):
-            cell_row = floor(fabs(self.grid.topleft_y - y) // self.grid.tile_size)
-            cell_col = floor(fabs(self.grid.topleft_x - x) // self.grid.tile_size)
+        if self.grid.is_position_inside_view_limits(x, y):
+            cell_row = floor(fabs(self.grid.top_left.y - y) // self.grid.tile_size)
+            cell_col = floor(fabs(self.grid.top_left.x - x) // self.grid.tile_size)
 
             if button == pyglet.window.mouse.LEFT:
                 self.stategrid.set_cell_state(cell_row, cell_col, alive=True)
             elif button == pyglet.window.mouse.RIGHT:
                 self.stategrid.set_cell_state(cell_row, cell_col, alive=False)
 
-            self.grid.update(self.stategrid)
+            self.grid.update()
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.SPACE:
