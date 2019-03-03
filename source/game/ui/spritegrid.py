@@ -1,6 +1,6 @@
 import pyglet
 # from game.stategrid import StateGrid
-from game.stategrid_np import StateGridNP as StateGrid
+from game.grid.stategrid_np import StateGridNP as StateGrid
 from game import resources
 
 

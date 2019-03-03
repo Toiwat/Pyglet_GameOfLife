@@ -1,6 +1,6 @@
 import pyglet
-from game.stategrid import StateGrid
-from game.stategrid_np import StateGridNP
+from game.grid.stategrid import StateGrid
+from game.grid.stategrid_np import StateGridNP
 import timeit
 
 if __name__ == "__main__":
@@ -12,8 +12,8 @@ if __name__ == "__main__":
     state_time = timeit.timeit(state.update, number=1000)
     npstate_time = timeit.timeit(npstate.update, number=1000)
     sprite_time = timeit.timeit(stmt="sprites.update(state)",
-                                setup='from game.stategrid import StateGrid; \
-                                from game.spritegrid import SpriteGrid; \
+                                setup='from game.grid.stategrid import StateGrid; \
+                                from game.ui.spritegrid import SpriteGrid; \
                                 state = StateGrid(100, 100); \
                                 sprites = SpriteGrid(state, 1280, 720)', number=1000)
 
