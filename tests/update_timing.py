@@ -10,21 +10,21 @@ if __name__ == "__main__":
 
     print("Timing first set...")
     sprite_time.append(timeit.timeit(stmt="sprites.update(state)",
-                                setup='from game.grid.stategrid import StateGrid; \
+                                setup='from game.grid.array_grid import ArrayGrid; \
                                 from game.ui.spritegrid import SpriteGrid; \
-                                state = StateGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
+                                state = ArrayGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
                                 sprites = SpriteGrid(state, 1280, 720)', number=cycles))
 
     print("Timing second set...")
     sprite_np_time.append(timeit.timeit(stmt="sprites.update(state)",
-                                     setup='from game.grid.stategrid_np import StateGridNP; \
+                                     setup='from game.grid.array_grid import StateGridNP; \
                                     from game.ui.spritegrid import SpriteGrid; \
                                     state = StateGridNP(' + str(grid_size) + ', ' + str(grid_size) + '); \
                                     sprites = SpriteGrid(state, 1280, 720)', number=cycles))
 
     print("Timing third set...")
     ogl_time.append(timeit.timeit(stmt="grid.update(state)",
-                                   setup='from game.grid.stategrid_np import StateGridNP; \
+                                   setup='from game.grid.array_grid import StateGridNP; \
                                     from game.ui.gl_renderer import oglGrid; \
                                     state = StateGridNP(' + str(grid_size) + ', ' + str(grid_size) + '); \
                                     grid = oglGrid(state, 1280, 720, 16)', number=cycles))

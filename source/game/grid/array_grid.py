@@ -1,5 +1,5 @@
 
-class StateGrid:
+class ArrayGrid:
     def __init__(self, rows, columns):
         self.rows = rows
         self.columns = columns
@@ -9,7 +9,7 @@ class StateGrid:
         return [[0 for _ in range(self.columns)] for _ in range(self.rows)]
 
     def update(self):
-        new_grid = StateGrid(self.rows, self.columns)
+        new_grid = ArrayGrid(self.rows, self.columns)
 
         for i in range(new_grid.rows):
             for j in range(new_grid.columns):
