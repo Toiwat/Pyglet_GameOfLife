@@ -1,6 +1,6 @@
 import pyglet
 from game.grid.numpy_grid import NumpyGrid as StateGrid
-from game.ui.gl_renderer import oglGrid
+from game.ui.pyglet_opengl import PygletOpenglViewer
 from math import floor, fabs
 
 
@@ -13,7 +13,7 @@ class GameOfLife(pyglet.window.Window):
         self.win_h = window_height
 
         self.stategrid = StateGrid(grid_rows, grid_columns)
-        self.grid = oglGrid(self.stategrid, self.win_w, self.win_h, tile_size)
+        self.grid = PygletOpenglViewer(self.stategrid, self.win_w, self.win_h, tile_size)
 
         self.running = False
 

@@ -25,9 +25,9 @@ if __name__ == "__main__":
     print("Timing third set...")
     ogl_time.append(timeit.timeit(stmt="grid.update(state)",
                                    setup='from game.grid.array_grid import NumpyGrid; \
-                                    from game.ui.gl_renderer import oglGrid; \
+                                    from game.ui.gl_renderer import PygletOpenglViewer; \
                                     state = NumpyGrid(' + str(grid_size) + ', ' + str(grid_size) + '); \
-                                    grid = oglGrid(state, 1280, 720, 16)', number=cycles))
+                                    grid = PygletOpenglViewer(state, 1280, 720, 16)', number=cycles))
 
     print("\n Tests finished!")
     print("--- Average run time over " + str(cycles) + " cycles, "

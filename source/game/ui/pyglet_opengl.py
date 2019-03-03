@@ -2,7 +2,7 @@ import pyglet
 from game.grid.numpy_grid import NumpyGrid as StateGrid
 
 
-class oglGrid:
+class PygletOpenglViewer:
     def __init__(self, stategrid: StateGrid, win_w, win_h, tile_size=16):
         self.rows = stategrid.rows
         self.columns = stategrid.columns
