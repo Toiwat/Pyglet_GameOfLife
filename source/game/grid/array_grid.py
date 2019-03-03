@@ -1,40 +1,42 @@
+from game.grid.stategrid import StateGrid
 
-class ArrayGrid:
+class ArrayGrid(StateGrid):
     def __init__(self, rows, columns):
-        self.rows = rows
-        self.columns = columns
-        self.cells = self.zero_state()
+        super(ArrayGrid, self).__init__(rows, columns)
 
-    def zero_state(self):
+    def initial_state(self):
         return [[0 for _ in range(self.columns)] for _ in range(self.rows)]
 
     def update(self):
-        new_grid = ArrayGrid(self.rows, self.columns)
+        new_state = self.initial_state()
+        self.updated = []
 
-        for i in range(new_grid.rows):
-            for j in range(new_grid.columns):
+        for i in range(self.rows):
+            for j in range(self.columns):
                 alive_neighbours = self.alive_neighbours(i, j)
                 # Old cell is alive
                 if self.is_cell_alive(i, j):
                     if alive_neighbours < 2 or alive_neighbours > 3:
-                        new_grid.cells[i][j] = 0  # Old cell now dies
+                        # Old cell now dies
+                        new_state[i][j] = 0
+                        self.updated.append((i, j))
                     else:
-                        new_grid.cells[i][j] = 1  # Old cell survives
+                        # Old cell survives
+                        new_state[i][j] = 1
                 # Old cell was dead
                 else:
                     if alive_neighbours == 3:
-                        new_grid.cells[i][j] = 1  # New cell is born from breeding
+                        # New cell is born from breeding
+                        new_state[i][j] = 1
+                        self.updated.append((i, j))
 
-        return new_grid
+        self.cells = new_state
 
     def is_cell_alive(self, row, col):
-        return (self.cells[row][col] == 1)
-
-    def set_state(self, row: int, col: int, alive: bool):
-        self.cells[row][col] = int(alive)
+        return self.cells[row][col] == 1
 
     def alive_neighbours(self, row, col):
-        living_neighbours = 0
+        count = 0
         for r in (row-1, row, row+1):
             for c in (col-1, col, col+1):
                 if r == row and c == col:  # Don't check the passed cell itself...
@@ -51,6 +53,6 @@ class ArrayGrid:
                         c = 0
 
                     if self.cells[r][c] == 1:
-                        living_neighbours += 1
+                        count += 1
 
-        return living_neighbours
+        return count
