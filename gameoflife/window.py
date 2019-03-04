@@ -23,6 +23,11 @@ class GameOfLife(pyglet.window.Window):
         self.viewer = gol.viewer.PygletOpenglViewer(self.state_grid, self, tile_size=tile_size,
                                          color_dead=(255, 255, 255), color_alive=(100, 100, 100))
 
+        self.label_generation = pyglet.text.Label("Generation: " + str(self.state_grid.generation),
+                                                  font_name="Segoe UI",
+                                                  font_size=18,
+                                                  x=10, y=10)
+
         self.running = False
 
     def run(self, interval):
@@ -33,6 +38,8 @@ class GameOfLife(pyglet.window.Window):
         if self.running:
             self.state_grid.update()
             self.viewer.update()
+
+            self.label_generation.text = "Generation: " + str(self.state_grid.generation)
 
     def edit_cells(self, x, y, mouse_button):
         if self.viewer.is_position_inside_view_limits(x, y):
@@ -60,3 +67,4 @@ class GameOfLife(pyglet.window.Window):
     def on_draw(self):
         self.clear()
         self.viewer.batch.draw()
+        self.label_generation.draw()
