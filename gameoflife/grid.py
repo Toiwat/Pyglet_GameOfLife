@@ -8,12 +8,14 @@ class _StateGrid:
         self.columns = columns
         self.cells = self.initial_state()
         self.updated = []
+        self.generation = 0
 
     def initial_state(self):
         pass
 
     def update(self):
-        pass
+        self.generation += 1
+
 
     def set_cell_state(self, row: int, col: int, alive: bool):
         self.cells[row, col] = int(alive)
@@ -31,6 +33,8 @@ class ArrayGrid(_StateGrid):
         return [[0 for _ in range(self.columns)] for _ in range(self.rows)]
 
     def update(self):
+        super(ArrayGrid, self).update()
+
         new_state = self.initial_state()
         self.updated = []
 
@@ -96,6 +100,8 @@ class NumpyGrid(_StateGrid):
         return np.zeros((self.rows, self.columns))
 
     def update(self):
+        super(NumpyGrid, self).update()
+
         # generates a new matrix of same size as self.cells; each element of count is the sum of all living
         # neighbours for the corresponding cell
         count = convolve2d(self.cells, self.rules, mode='same', boundary='wrap')
