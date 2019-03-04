@@ -7,6 +7,7 @@ class _StateGrid:
         self.rows = rows
         self.columns = columns
         self.cells = self.initial_state()
+        self.new_state = self.initial_state()
         self.updated = []
         self.generation = 0
 
@@ -14,8 +15,9 @@ class _StateGrid:
         pass
 
     def update(self):
-        self.generation += 1
-
+        # Only update generation count if there's been changes
+        if not self.updated == []:
+            self.generation += 1
 
     def set_cell_state(self, row: int, col: int, alive: bool):
         self.cells[row, col] = int(alive)
@@ -33,9 +35,7 @@ class ArrayGrid(_StateGrid):
         return [[0 for _ in range(self.columns)] for _ in range(self.rows)]
 
     def update(self):
-        super(ArrayGrid, self).update()
-
-        new_state = self.initial_state()
+        self.new_state = self.initial_state()
         self.updated = []
 
         for i in range(self.rows):
@@ -45,19 +45,20 @@ class ArrayGrid(_StateGrid):
                 if self.is_cell_alive(i, j):
                     if alive_neighbours < 2 or alive_neighbours > 3:
                         # Old cell now dies
-                        new_state[i][j] = 0
+                        self.new_state[i][j] = 0
                         self.updated.append((i, j))
                     else:
                         # Old cell survives
-                        new_state[i][j] = 1
+                        self.new_state[i][j] = 1
                 # Old cell was dead
                 else:
                     if alive_neighbours == 3:
                         # New cell is born from breeding
-                        new_state[i][j] = 1
+                        self.new_state[i][j] = 1
                         self.updated.append((i, j))
 
-        self.cells = new_state
+        self.cells = self.new_state
+        super(ArrayGrid, self).update()
 
     def is_cell_alive(self, row, col):
         return self.cells[row][col] == 1
@@ -100,8 +101,6 @@ class NumpyGrid(_StateGrid):
         return np.zeros((self.rows, self.columns))
 
     def update(self):
-        super(NumpyGrid, self).update()
-
         # generates a new matrix of same size as self.cells; each element of count is the sum of all living
         # neighbours for the corresponding cell
         count = convolve2d(self.cells, self.rules, mode='same', boundary='wrap')
@@ -111,9 +110,11 @@ class NumpyGrid(_StateGrid):
         # logical_and and logical_or are required because Numpy no longer does direct element-wise logical operations
         # for ndarrays
         # astype(int) transforms the resulting boolean matrix into ints for the next state
-        new_state = np.logical_or((count == 3), np.logical_and((self.cells == 1), (count == 2)))
+        self.new_state = np.logical_or((count == 3), np.logical_and((self.cells == 1), (count == 2)))
 
         self.updated = [(row, cell) for cell in range(self.columns) for row in range(self.rows)
-                        if np.logical_xor(new_state, self.cells.astype(bool))[row, cell]]
+                        if np.logical_xor(self.new_state, self.cells.astype(bool))[row, cell]]
 
-        self.cells = new_state.astype(int)
+        self.cells = self.new_state.astype(int)
+
+        super(NumpyGrid, self).update()
