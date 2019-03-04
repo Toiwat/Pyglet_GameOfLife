@@ -2,7 +2,7 @@ import numpy as np
 from scipy.signal import convolve2d
 
 
-class StateGrid:
+class _StateGrid:
     def __init__(self, rows, columns):
         self.rows = rows
         self.columns = columns
@@ -23,7 +23,7 @@ class StateGrid:
         return self.updated
 
 
-class ArrayGrid(StateGrid):
+class ArrayGrid(_StateGrid):
     def __init__(self, rows, columns):
         super(ArrayGrid, self).__init__(rows, columns)
 
@@ -81,7 +81,7 @@ class ArrayGrid(StateGrid):
         return count
 
 
-class NumpyGrid(StateGrid):
+class NumpyGrid(_StateGrid):
     def __init__(self, rows, columns, rules_kernel=None):
         super(NumpyGrid, self).__init__(rows, columns)
 

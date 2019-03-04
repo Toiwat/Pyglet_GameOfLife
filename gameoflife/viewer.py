@@ -5,8 +5,8 @@ from collections import namedtuple
 Coord = namedtuple("Coord", "x y")
 
 
-class Viewer:
-    def __init__(self, state_grid: gol.grid.StateGrid, window, tile_size, color_dead, color_alive):
+class _Viewer:
+    def __init__(self, state_grid: gol.grid._StateGrid, window, tile_size, color_dead, color_alive):
 
         # Store handles to window and game state grid
         self.window = window
@@ -52,8 +52,8 @@ class Viewer:
         pass
 
 
-class PygletSpritesViewer(Viewer):
-    def __init__(self, state_grid: gol.grid.StateGrid, window, color_dead=(255, 255, 255), color_alive=(50,50,50)):
+class PygletSpritesViewer(_Viewer):
+    def __init__(self, state_grid: gol.grid._StateGrid, window, color_dead=(255, 255, 255), color_alive=(50, 50, 50)):
         # List for pyglet sprites
         self.sprites = []
         super(PygletSpritesViewer, self).__init__(state_grid, window, tile_size=16, color_alive=color_alive, color_dead=color_dead)
@@ -73,8 +73,8 @@ class PygletSpritesViewer(Viewer):
                     self.sprites[i][j].color = self.color_dead
 
 
-class PygletOpenglViewer(Viewer):
-    def __init__(self, state_grid: gol.grid.StateGrid, window, tile_size=16, color_dead=(255, 255, 255), color_alive=(50,50,50)):
+class PygletOpenglViewer(_Viewer):
+    def __init__(self, state_grid: gol.grid._StateGrid, window, tile_size=16, color_dead=(255, 255, 255), color_alive=(50, 50, 50)):
         # OpenGL vertex and vertex color data
         self.vertex_list = []
         self.color_list = []
