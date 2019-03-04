@@ -4,7 +4,7 @@ from math import floor, fabs
 
 
 class GameOfLife(pyglet.window.Window):
-    def __init__(self, window_width=800, window_height=600, tile_size=32, grid_size=(0, 0)):
+    def __init__(self, window_width=800, window_height=600, tile_size=32, time_interval=1/10, grid_size=(0, 0)):
         super(GameOfLife, self).__init__(width=window_width, height=window_height,
                                          resizable=False,
                                          caption="Game of Life - Running: False")
@@ -23,15 +23,27 @@ class GameOfLife(pyglet.window.Window):
         self.viewer = gol.viewer.PygletOpenglViewer(self.state_grid, self, tile_size=tile_size,
                                          color_dead=(255, 255, 255), color_alive=(100, 100, 100))
 
+        self.time_interval = time_interval
+
         self.label_generation = pyglet.text.Label("Generation: " + str(self.state_grid.generation),
                                                   font_name="Segoe UI",
                                                   font_size=18,
                                                   x=10, y=10)
+        self.label_time_interval = pyglet.text.Label("Speed: " + str(self.time_interval) + " sec.",
+                                                     font_name="Segoe UI",
+                                                     font_size=18,
+                                                     x=window_width-10, y=10,
+                                                     anchor_x='right')
 
         self.running = False
 
-    def run(self, interval):
-        pyglet.clock.schedule_interval(self.update, interval)
+    def set_time_interval(self):
+        pyglet.clock.unschedule(self.update)
+        pyglet.clock.schedule_interval(self.update, self.time_interval)
+        self.label_time_interval.text = "Speed: " + str(self.time_interval) + " sec."
+
+    def run(self):
+        pyglet.clock.schedule_interval(self.update, self.time_interval)
         pyglet.app.run()
 
     def update(self, dt):
@@ -64,7 +76,15 @@ class GameOfLife(pyglet.window.Window):
             self.running = not self.running
             self.set_caption("Game of Life - Running: " + str(self.running))
 
+        elif symbol == pyglet.window.key.PLUS:
+            self.time_interval /= 2
+            self.set_time_interval()
+        elif symbol == pyglet.window.key.MINUS:
+            self.time_interval *= 2
+            self.set_time_interval()
+
     def on_draw(self):
         self.clear()
         self.viewer.batch.draw()
         self.label_generation.draw()
+        self.label_time_interval.draw()
