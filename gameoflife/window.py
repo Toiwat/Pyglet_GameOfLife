@@ -1,6 +1,5 @@
 import pyglet
-from game.grid.numpy_grid import NumpyGrid
-from game.ui.pyglet_opengl import PygletOpenglViewer
+import gameoflife as gol
 from math import floor, fabs
 
 
@@ -20,8 +19,8 @@ class GameOfLife(pyglet.window.Window):
         self.width = window_width
         self.height = window_height
 
-        self.state_grid = NumpyGrid(grid_rows, grid_columns)
-        self.viewer = PygletOpenglViewer(self.state_grid, self, tile_size=tile_size,
+        self.state_grid = gol.grid.NumpyGrid(grid_rows, grid_columns)
+        self.viewer = gol.viewer.PygletOpenglViewer(self.state_grid, self, tile_size=tile_size,
                                          color_dead=(255, 255, 255), color_alive=(100, 100, 100))
 
         self.running = False

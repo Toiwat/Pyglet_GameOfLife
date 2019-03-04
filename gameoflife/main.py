@@ -1,4 +1,4 @@
-from game.window import GameOfLife
+from gameoflife.window import GameOfLife
 
 
 if __name__ == "__main__":
