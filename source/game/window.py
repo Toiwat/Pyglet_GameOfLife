@@ -26,6 +26,10 @@ class GameOfLife(pyglet.window.Window):
 
         self.running = False
 
+    def run(self, interval):
+        pyglet.clock.schedule_interval(self.update, interval)
+        pyglet.app.run()
+
     def update(self, dt):
         if self.running:
             self.state_grid.update()
