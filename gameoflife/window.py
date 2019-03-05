@@ -25,15 +25,18 @@ class GameOfLife(pyglet.window.Window):
 
         self.time_interval = time_interval
 
+        self.batch_labels = pyglet.graphics.Batch()
         self.label_generation = pyglet.text.Label("Generation: " + str(self.state_grid.generation),
                                                   font_name="Segoe UI",
-                                                  font_size=18,
-                                                  x=10, y=10)
-        self.label_time_interval = pyglet.text.Label("Speed: " + str(self.time_interval) + " sec.",
+                                                  font_size=16,
+                                                  x=10, y=10,
+                                                  batch=self.batch_labels)
+        self.label_time_interval = pyglet.text.Label("Simulation Speed: " + str(self.time_interval) + " sec.",
                                                      font_name="Segoe UI",
-                                                     font_size=18,
+                                                     font_size=16,
                                                      x=window_width-10, y=10,
-                                                     anchor_x='right')
+                                                     anchor_x='right',
+                                                     batch=self.batch_labels)
 
         self.running = False
 
@@ -86,5 +89,4 @@ class GameOfLife(pyglet.window.Window):
     def on_draw(self):
         self.clear()
         self.viewer.batch.draw()
-        self.label_generation.draw()
-        self.label_time_interval.draw()
+        self.batch_labels.draw()
