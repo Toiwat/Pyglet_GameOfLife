@@ -37,6 +37,19 @@ class GameOfLife(pyglet.window.Window):
                                                      x=window_width-10, y=10,
                                                      anchor_x='right',
                                                      batch=self.batch_labels)
+        self.label_instructions = pyglet.text.Label("Left click to draw cells, right click to erase.",
+                                                    font_name="Segoe UI",
+                                                    font_size=14,
+                                                    x=10, y=window_height-10,
+                                                    anchor_y='top',
+                                                    batch=self.batch_labels)
+        self.label_controls = pyglet.text.Label("Play/Pause: Space\nSimulation speed control: +/-",
+                                                font_name="Segoe UI",
+                                                font_size=10,
+                                                x=window_width-10, y=window_height - 10,
+                                                anchor_x='right', anchor_y='top',
+                                                batch=self.batch_labels,
+                                                multiline=True, width=200)
 
         self.running = False
 
